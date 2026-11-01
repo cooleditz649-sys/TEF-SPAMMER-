@@ -1,0 +1,127 @@
+--[[
+    UNIVERSAL CHAT SPAMMER - FINAL PREFIX 60
+    NO EXCEED LIMIT - RP: TEF SPAMMER | Bio: !YOUR WEST BUT TEF IS BEST🔥! | TMKX ONLY
+]]
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TextChatService = game:GetService("TextChatService")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local SoundService = game:GetService("SoundService")
+local VirtualUser = game:GetService("VirtualUser")
+
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- CONFIG - PREFIX 60 (NO EXCEED)
+local SPAM_NAME = "TEF SPAMMER"
+local RP_NAME = "TEF SPAMMER"
+local RP_BIO  = "!YOUR WEST BUT TEF IS BEST🔥!"
+local defaultDelay = 0.20
+local head = string.rep("@", 60) -- PREFIX 60 REPEAT
+
+local spamWords = {
+    "TMKX MEH VOID ","TMKX MEH PEN","TMKX MEH TEF ON TOP",
+    "TMKX MEH AURA","TMKX MEH ANIMAL ",
+    "TMKX MEH BOTTLE","TMKX MEH BUILDING","TEF SPAMMER NEVER LOSES",
+    "TMKX MEH HOSPITAL","TMKX MEH CLEAN ","TMKX MEH ANGER","TMKX MEH CPR",  "TMKX MEH HYPER"
+}
+local emojis = {"🔥","💀","⚡","👑","🚀"}
+local running=false local startIndex=1 local emojiIndex=1
+local emojiEnabled=false local cycleEnabled=false local soundEnabled=true local afkEnabled=true
+
+pcall(function() player.Idled:Connect(function() if afkEnabled then VirtualUser:CaptureController() VirtualUser:ClickButton2(Vector2.new(0,0)) end end) end)
+local spamSound = Instance.new("Sound", SoundService) spamSound.SoundId="rbxassetid://12221967" spamSound.Volume=0.5
+
+-- RP AUTO SETTER
+task.spawn(function()
+    local RE = ReplicatedStorage:WaitForChild("RE", 8) if not RE then return end
+    local NameRemote = RE:FindFirstChild("1RPNam1eTex1t") local ColorRemote = RE:FindFirstChild("1RPNam1eColo1r")
+    if NameRemote then for i=1,5 do pcall(function() NameRemote:FireServer("RolePlayName",RP_NAME) NameRemote:FireServer("RolePlayBio",RP_BIO) end) task.wait(0.3) end end
+    if ColorRemote then while true do local c=Color3.fromHSV((tick()%4)/4,1,1) pcall(function() ColorRemote:FireServer("PickingRPNameColor",c) ColorRemote:FireServer("PickingRPBioColor",c) end) task.wait(0.1) end end
+end)
+
+-- INTRO (CLEAN TEF)
+local introGui = Instance.new("ScreenGui", playerGui) introGui.Name="ProIntro" introGui.IgnoreGuiInset=true
+local bg = Instance.new("Frame", introGui) bg.Size=UDim2.new(1,0,1,0) bg.BackgroundColor3=Color3.fromRGB(0,0,0)
+for i=1,50 do local c=Instance.new("TextLabel",bg) c.Size=UDim2.new(0,15,1,0) c.Position=UDim2.new(0,math.random(0,1920),0,math.random(-800,0)) c.BackgroundTransparency=1 c.Text=string.rep("@\n",5) c.TextColor3=Color3.fromRGB(0,math.random(150,255),math.random(100,255)) c.Font=Enum.Font.Code c.TextSize=14 TweenService:Create(c,TweenInfo.new(math.random(3,6),Enum.EasingStyle.Linear),{Position=UDim2.new(0,c.Position.X.Offset,1,0)}):Play() end
+local introFrame=Instance.new("Frame",introGui) introFrame.Size=UDim2.fromOffset(500,200) introFrame.Position=UDim2.new(0.5,-250,0.5,-100) introFrame.BackgroundColor3=Color3.fromRGB(12,12,18) Instance.new("UICorner",introFrame).CornerRadius=UDim.new(0,12)
+local introStroke=Instance.new("UIStroke",introFrame) introStroke.Thickness=2.5
+local introTitle=Instance.new("TextLabel",introFrame) introTitle.Size=UDim2.new(1,0,0.6,0) introTitle.Position=UDim2.fromOffset(0,20) introTitle.BackgroundTransparency=1 introTitle.Text="🌟 TEF BEST 🌟\n"..SPAM_NAME introTitle.Font=Enum.Font.GothamBlack introTitle.TextScaled=true
+local conn conn=RunService.RenderStepped:Connect(function() local h=(tick()*0.8)%1 local r=Color3.fromHSV(h,0.8,1) introStroke.Color=r introTitle.TextColor3=r end)
+task.wait(3) conn:Disconnect() introGui:Destroy()
+
+-- MAIN GUI
+local gui=Instance.new("ScreenGui",playerGui) gui.Name="ProSpammerHub" gui.ResetOnSpawn=false
+local frame=Instance.new("Frame",gui) frame.Size=UDim2.fromOffset(440,610) frame.Position=UDim2.new(0.5,-220,0.5,-305) frame.BackgroundColor3=Color3.fromRGB(12,12,18) frame.Active=true frame.Draggable=true Instance.new("UICorner",frame).CornerRadius=UDim.new(0,12)
+local frameStroke=Instance.new("UIStroke",frame) frameStroke.Thickness=2.5
+local topBar=Instance.new("Frame",frame) topBar.Size=UDim2.new(1,0,0,48) topBar.BackgroundTransparency=1
+local title=Instance.new("TextLabel",topBar) title.Size=UDim2.new(1,-60,1,0) title.Position=UDim2.fromOffset(16,0) title.BackgroundTransparency=1 title.Text="🌟 TEF BEST - PREFIX 60 🌟" title.TextSize=14 title.Font=Enum.Font.GothamBold title.TextXAlignment=Enum.TextXAlignment.Left
+local minimizeButton=Instance.new("TextButton",topBar) minimizeButton.Size=UDim2.fromOffset(32,32) minimizeButton.Position=UDim2.new(1,-42,0,8) minimizeButton.Text="-" minimizeButton.TextColor3=Color3.new(1,1,1) minimizeButton.BackgroundColor3=Color3.fromRGB(25,25,40) Instance.new("UICorner",minimizeButton).CornerRadius=UDim.new(0,8)
+local miniButton=Instance.new("TextButton",gui) miniButton.Size=UDim2.new(0,130,0,40) miniButton.Position=UDim2.new(0,15,0.5,-20) miniButton.Text="⚡ OPEN TEF" miniButton.TextColor3=Color3.new(1,1,1) miniButton.BackgroundColor3=Color3.fromRGB(15,15,25) miniButton.Visible=false Instance.new("UICorner",miniButton).CornerRadius=UDim.new(0,10)
+local miniStroke=Instance.new("UIStroke",miniButton) miniStroke.Thickness=2
+
+local function createCard(y, labelText, placeholder, color)
+    local cont=Instance.new("Frame",frame) cont.Size=UDim2.new(1,-32,0,45) cont.Position=UDim2.fromOffset(16,y) cont.BackgroundColor3=Color3.fromRGB(18,18,28) Instance.new("UICorner",cont).CornerRadius=UDim.new(0,8)
+    local box=Instance.new("TextBox",cont) box.Size=UDim2.new(1,-16,0,32) box.Position=UDim2.fromOffset(8,6) box.PlaceholderText=placeholder box.PlaceholderColor3=Color3.fromRGB(120,120,140) box.Text="" box.TextColor3=color box.TextSize=13 box.Font=Enum.Font.GothamBold box.BackgroundColor3=Color3.fromRGB(28,28,45) box.ClearTextOnFocus=false Instance.new("UICorner",box).CornerRadius=UDim.new(0,6) return box
+end
+
+local nameBox1=createCard(60,"Target 1","Target 1",Color3.fromRGB(255,110,110))
+local nameBox2=createCard(115,"Target 2","Target 2",Color3.fromRGB(255,110,110))
+local nameBox3=createCard(170,"Target 3","Target 3",Color3.fromRGB(255,110,110))
+local rpBox=createCard(225,"RP Name",SPAM_NAME,Color3.fromRGB(255,200,100)) rpBox.Text=RP_NAME
+local bioBox=createCard(280,"RP Bio",RP_BIO,Color3.fromRGB(200,150,255)) bioBox.Text=RP_BIO
+local delayBox=createCard(335,"Delay","0.20",Color3.fromRGB(100,200,255)) delayBox.Text=tostring(defaultDelay)
+
+local extraBar=Instance.new("Frame",frame) extraBar.Size=UDim2.new(1,-32,0,48) extraBar.Position=UDim2.fromOffset(16,390) extraBar.BackgroundColor3=Color3.fromRGB(18,18,28) Instance.new("UICorner",extraBar).CornerRadius=UDim.new(0,8)
+local emojiBtn=Instance.new("TextButton",extraBar) emojiBtn.Size=UDim2.fromOffset(190,34) emojiBtn.Position=UDim2.fromOffset(7,7) emojiBtn.BackgroundColor3=Color3.fromRGB(25,25,40) emojiBtn.Text="EMOJI: OFF" emojiBtn.TextColor3=Color3.fromRGB(200,200,220) emojiBtn.Font=Enum.Font.GothamBold Instance.new("UICorner",emojiBtn).CornerRadius=UDim.new(0,6)
+local cycleBtn=Instance.new("TextButton",extraBar) cycleBtn.Size=UDim2.fromOffset(190,34) cycleBtn.Position=UDim2.fromOffset(203,7) cycleBtn.BackgroundColor3=Color3.fromRGB(25,25,40) cycleBtn.Text="CYCLE: OFF" cycleBtn.TextColor3=Color3.fromRGB(200,200,220) cycleBtn.Font=Enum.Font.GothamBold Instance.new("UICorner",cycleBtn).CornerRadius=UDim.new(0,6)
+
+local soundBar=Instance.new("Frame",frame) soundBar.Size=UDim2.new(1,-32,0,48) soundBar.Position=UDim2.fromOffset(16,445) soundBar.BackgroundColor3=Color3.fromRGB(18,18,28) Instance.new("UICorner",soundBar).CornerRadius=UDim.new(0,8)
+local soundBtn=Instance.new("TextButton",soundBar) soundBtn.Size=UDim2.fromOffset(190,34) soundBtn.Position=UDim2.fromOffset(7,7) soundBtn.BackgroundColor3=Color3.fromRGB(15,35,20) soundBtn.Text="SOUND: ON 🔊" soundBtn.TextColor3=Color3.fromRGB(0,255,100) soundBtn.Font=Enum.Font.GothamBold Instance.new("UICorner",soundBtn).CornerRadius=UDim.new(0,6)
+local afkBtn=Instance.new("TextButton",soundBar) afkBtn.Size=UDim2.fromOffset(190,34) afkBtn.Position=UDim2.fromOffset(203,7) afkBtn.BackgroundColor3=Color3.fromRGB(15,35,20) afkBtn.Text="AFK: ON 🛡️" afkBtn.TextColor3=Color3.fromRGB(0,255,100) afkBtn.Font=Enum.Font.GothamBold Instance.new("UICorner",afkBtn).CornerRadius=UDim.new(0,6)
+
+local status=Instance.new("TextLabel",frame) status.Size=UDim2.new(1,-32,0,24) status.Position=UDim2.fromOffset(16,500) status.BackgroundTransparency=1 status.Text="Status: READY [PREFIX 60 | NO EXCEED]" status.TextColor3=Color3.fromRGB(150,150,170) status.TextSize=11 status.Font=Enum.Font.Gotham status.TextXAlignment=Enum.TextXAlignment.Left
+local startButton=Instance.new("TextButton",frame) startButton.Size=UDim2.new(0.5,-20,0,42) startButton.Position=UDim2.fromOffset(16,530) startButton.Text="▶ START" startButton.BackgroundColor3=Color3.fromRGB(35,140,220) startButton.TextColor3=Color3.new(1,1,1) startButton.Font=Enum.Font.GothamBold Instance.new("UICorner",startButton).CornerRadius=UDim.new(0,8)
+local stopButton=Instance.new("TextButton",frame) stopButton.Size=UDim2.new(0.5,-20,0,42) stopButton.Position=UDim2.new(0.5,4,0,530) stopButton.Text="⏹ STOP" stopButton.BackgroundColor3=Color3.fromRGB(180,45,65) stopButton.TextColor3=Color3.new(1,1,1) stopButton.Font=Enum.Font.GothamBold Instance.new("UICorner",stopButton).CornerRadius=UDim.new(0,8)
+
+RunService.RenderStepped:Connect(function() local h=(tick()*0.5)%1 local r=Color3.fromHSV(h,0.8,1) frameStroke.Color=r miniStroke.Color=r title.TextColor3=r end)
+minimizeButton.MouseButton1Click:Connect(function() frame.Visible=false miniButton.Visible=true end)
+miniButton.MouseButton1Click:Connect(function() miniButton.Visible=false frame.Visible=true end)
+emojiBtn.MouseButton1Click:Connect(function() emojiEnabled=not emojiEnabled if emojiEnabled then emojiBtn.Text="EMOJI: ON 🔥" emojiBtn.TextColor3=Color3.fromRGB(0,255,100) else emojiBtn.Text="EMOJI: OFF" emojiBtn.TextColor3=Color3.fromRGB(200,200,220) end end)
+cycleBtn.MouseButton1Click:Connect(function() cycleEnabled=not cycleEnabled if cycleEnabled then cycleBtn.Text="CYCLE: ON" cycleBtn.TextColor3=Color3.fromRGB(0,255,100) else cycleBtn.Text="CYCLE: OFF" cycleBtn.TextColor3=Color3.fromRGB(200,200,220) end end)
+soundBtn.MouseButton1Click:Connect(function() soundEnabled=not soundEnabled if soundEnabled then soundBtn.Text="SOUND: ON 🔊" soundBtn.TextColor3=Color3.fromRGB(0,255,100) else soundBtn.Text="SOUND: OFF 🔇" soundBtn.TextColor3=Color3.fromRGB(200,200,220) end end)
+afkBtn.MouseButton1Click:Connect(function() afkEnabled=not afkEnabled if afkEnabled then afkBtn.Text="AFK: ON 🛡️" afkBtn.TextColor3=Color3.fromRGB(0,255,100) else afkBtn.Text="AFK: OFF" afkBtn.TextColor3=Color3.fromRGB(200,200,220) end end)
+
+local function getChannel() local c=TextChatService:FindFirstChild("TextChannels") if c then return c:FindFirstChild("RBXGeneral") end return nil end
+
+-- SHORT MESSAGE BUILDER - PREFIX 60
+local function buildMessage(targetName, offset)
+    local output={} table.insert(output,head)
+    if targetName~="" then table.insert(output,"["..targetName.."]") end
+    local pos=((offset-1)%#spamWords)+1 table.insert(output,spamWords[pos])
+    if emojiEnabled then local e if cycleEnabled then e=emojis[emojiIndex] emojiIndex=emojiIndex+1 if emojiIndex>#emojis then emojiIndex=1 end else e=emojis[math.random(1,#emojis)] end table.insert(output,e) end
+    return table.concat(output," ")
+end
+
+local function sendMessage(text) local ch=getChannel() if ch then pcall(function() ch:SendAsync(text) end) else pcall(function() local ev=ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents") if ev and ev:FindFirstChild("SayMessageRequest") then ev.SayMessageRequest:FireServer(text,"All") end end) end end
+
+startButton.MouseButton1Click:Connect(function()
+    if running then return end
+    local customDelay=tonumber(delayBox.Text) or 0.20
+    running=true status.Text="Status: ⚡ RUNNING PREFIX 60 ⚡" status.TextColor3=Color3.fromRGB(100,255,150)
+    task.spawn(function()
+        local targetIndex=1
+        while running do
+            local allTargets={} if nameBox1.Text~="" then table.insert(allTargets,nameBox1.Text) end if nameBox2.Text~="" then table.insert(allTargets,nameBox2.Text) end if nameBox3.Text~="" then table.insert(allTargets,nameBox3.Text) end if #allTargets==0 then allTargets={"Target"} end
+            local currentTarget=allTargets[targetIndex] targetIndex=targetIndex+1 if targetIndex>#allTargets then targetIndex=1 end
+            local msg=buildMessage(currentTarget,startIndex)
+            sendMessage(msg) if soundEnabled then pcall(function() spamSound:Play() end) end
+            startIndex=startIndex+1 if startIndex>#spamWords then startIndex=1 end
+            task.wait(customDelay)
+        end
+    end)
+end)
+stopButton.MouseButton1Click:Connect(function() running=false status.Text="Status: STOPPED [PREFIX 60]" status.TextColor3=Color3.fromRGB(255,100,100) end)
+print("⚡ PREFIX 60 LOADED - TEF EDITION")
